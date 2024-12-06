@@ -1,0 +1,31 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<h1>Reporte de Carrera: {{ carrera.nombre }}</h1>
+
+<h2>Promedio de Calificaciones</h2>
+<p>{{ promedio_calificaciones|floatformat:2 }}</p>
+
+<h2>Tasa de Asistencia</h2>
+<p>{{ tasa_asistencia|floatformat:2 }}%</p>
+
+<h2>Distribución de Género</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Género</th>
+            <th>Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for genero in distribucion_genero %}
+        <tr>
+            <td>{{ genero.genero }}</td>
+            <td>{{ genero.count }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'generar_pdf_reporte_carrera' carrera.id %}" class="btn btn-primary">Generar PDF</a>
+{% endblock %}

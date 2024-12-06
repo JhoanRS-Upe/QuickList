@@ -1,0 +1,40 @@
+{% extends 'core/alumno_dashboard.html' %}
+
+{% block content %}
+<div class="asistencias-container">
+    <h2 class="titulo-asistencias">Consulta de Asistencias</h2>
+
+    {% if messages %}
+    <div class="error-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Tabla de asistencias -->
+    <div class="tabla-container">
+        <table class="tabla-resultados">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Alumno</th>
+                    <th>Calificación</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for asistencia in asistencias %}
+                <tr>
+                    <td>{{ asistencia.lista.fecha }}</td>
+                    <td>{{ asistencia.clase_alumno.alumno.nombres }} {{ asistencia.clase_alumno.alumno.apellidoP }} {{ asistencia.clase_alumno.alumno.apellidoM }}</td>
+                    <td>{{ asistencia.calificacion }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'core/profesor_dashboard.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">Modificar Grupo</h2>
+
+    <!-- Mostrar los mensajes de error -->
+    {% if messages %}
+    <div class="error-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="codigo">Código del grupo:</label>
+            <input class="form-control" type="text" id="codigo" name="codigo" value="{{ grupo.codigo }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="grado">Grado:</label>
+            <input class="form-control" type="number" id="grado" name="grado" value="{{ grupo.grado }}" min="1"
+                required>
+        </div>
+        <div class="form-group">
+            <label for="grupo">Grupo:</label>
+            <input class="form-control" type="text" id="grupo" name="grupo" value="{{ grupo.grupo }}" maxlength="1"
+                required>
+        </div>
+        <div class="form-group">
+            <label for="anio">Año:</label>
+            <input class="form-control" type="number" id="anio" name="anio" value="{{ grupo.anio }}" min="2000"
+                max="2099" required>
+        </div>
+        <div class="form-group">
+            <label for="profesor">Profesor:</label>
+            <select id="profesor" name="profesor" class="form-control" required>
+                {% for profesor in profesores %}
+                <option value="{{ profesor.clave }}">
+                    {{ profesor.nombres }} {{ profesor.apellidoP }} {{ profesor.apellidoM }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="carrera">Carrera:</label>
+            <select id="carrera" name="carrera" class="form-control" required>
+                {% for carrera in carreras %}
+                <option value="{{ carrera.id }}">
+                    {{ carrera.nombre }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="periodo">Periodo:</label>
+            <select id="periodo" name="periodo" class="form-control" required>
+                {% for periodo in periodos %}
+                <option value="{{ periodo.idPeriodo }}">
+                    {{ periodo.nombre }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="materia">Materia:</label>
+            <select id="materia" name="materia" class="form-control" required>
+                {% for materia in materias %}
+                <option value="{{ materia.clave }}">
+                    {{ materia.nombre }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" type="submit">Guardar Cambios</button>
+            <a class="btn" href="{% url 'grupos_profesor_consulta' %}">Cancelar</a>
+        </div>
+    </form>
+</div>
+<style>
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #e92323;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #218838;
+    }
+</style>
+{% endblock %}

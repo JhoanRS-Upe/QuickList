@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumno Dashboard - QuickList</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/alumno_dashboard.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body>
+    {% include 'core/header.html' %}
+    <div class="dashboard-container">
+        {% include 'core/sidebarA.html' %}
+        <main class="main-content">
+            {% block content %}
+            <h1>Bienvenido al Panel del Alumno</h1>
+            <!-- Contenido del Dashboard del Alumno -->
+            {% endblock %}
+        </main>
+    </div>
+    {% include 'core/footer.html' %}
+</body>
+
+</html>

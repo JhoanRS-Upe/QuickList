@@ -1,0 +1,66 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<div class="justificantes-consulta-container">
+    <h2 class="titulo-consulta">Consulta de Justificantes</h2>
+
+    <!-- Mostrar los mensajes de error -->
+    {% if messages %}
+    <div class="error-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="GET" action="{% url 'justificantes_consulta' %}" class="form-filtros">
+        <div class="form-group">
+            <label for="busqueda">Buscar por Descripción:</label>
+            <input type="text" id="busqueda" name="busqueda" placeholder="Descripción" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Consultar</button>
+    </form>
+
+    <!-- Tabla de resultados -->
+    <div class="tabla-container">
+        <table class="tabla-resultados">
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Clases</th>
+                    <th>Alumno</th>
+                    <th>Profesor</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for justificante in justificantes %}
+                <tr>
+                    <td>{{ justificante.descripcion }}</td>
+                    <td>{{ justificante.estado }}</td>
+                    <td>
+                        {% for clase_alumno in justificante.alumno.clasealumno_set.all %}
+                        {{ clase_alumno.clase.codigo }} - {{ clase_alumno.clase.grado }}°{{ clase_alumno.clase.grupo }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>{{ justificante.alumno.matricula }} - {{ justificante.alumno.nombres }} {{ justificante.alumno.apellidoP }} {{ justificante.alumno.apellidoM }}</td>
+                    <td>{{ justificante.profesor.clave }} - {{ justificante.profesor.nombres }} {{ justificante.profesor.apellidoP }} {{ justificante.profesor.apellidoM }}</td>
+                    <td>
+                        <a href="{% url 'modificar_justificante' justificante.idJustificante %}">✏️</a>
+                        <a href="{% url 'eliminar_justificante' justificante.idJustificante %}">❌</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No se encontraron justificantes.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

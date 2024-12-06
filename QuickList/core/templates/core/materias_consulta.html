@@ -1,0 +1,61 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<h1 align="center">Consulta de Materias</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="GET" action="{% url 'materias_consulta' %}" class="form-filtros">
+    <div class="form-group">
+        <label for="busqueda">Buscar por Nombre:</label>
+        <input type="text" id="busqueda" name="busqueda" placeholder="Nombre de la materia" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Consultar</button>
+</form>
+
+<div class="tabla-container">
+    <table class="tabla-resultados">
+        <thead>
+            <tr>
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th>Créditos</th>
+                <th>Eje</th>
+                <th>Carrera</th>
+                <th>Periodo</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for materia in materias %}
+            <tr>
+                <td>{{ materia.clave }}</td>
+                <td>{{ materia.nombre }}</td>
+                <td>{{ materia.creditos }}</td>
+                <td>{{ materia.eje }}</td>
+                <td>{{ materia.carrera.nombre }}</td>
+                <td>{{ materia.periodo.nombre }}</td>
+                <td>
+                    <a href="{% url 'modificar_materia' materia.clave %}">✏️</a>
+                    <a href="{% url 'eliminar_materia' materia.clave %}">❌</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No se encontraron materias.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

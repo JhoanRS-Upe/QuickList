@@ -1,0 +1,30 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<h1>Seleccionar Carrera para Reporte</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="POST" action="{% url 'reporte_carrera' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="carrera">Seleccionar Carrera:</label>
+        <select id="carrera" name="carrera" class="form-control">
+            {% for carrera in carreras %}
+            <option value="{{ carrera.id }}">{{ carrera.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Generar Reporte</button>
+</form>
+{% endblock %}

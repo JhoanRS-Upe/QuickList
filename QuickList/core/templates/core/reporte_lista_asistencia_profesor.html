@@ -1,0 +1,28 @@
+{% extends 'core/profesor_dashboard.html' %}
+
+{% block content %}
+<h1>Seleccionar Grupo para Lista de Asistencia</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="POST" action="{% url 'reporte_lista_asistencia_profesor' %}">
+    {% csrf_token %}
+    <label for="grupo">Seleccionar Grupo:</label>
+    <select name="grupo" id="grupo">
+        {% for grupo in grupos %}
+        <option value="{{ grupo.codigo }}">{{ grupo.codigo }} - {{ grupo.materia.nombre }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Generar Lista de Asistencia</button>
+</form>
+{% endblock %}

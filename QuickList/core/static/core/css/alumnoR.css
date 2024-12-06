@@ -1,0 +1,115 @@
+/* Paleta de colores */
+:root {
+    --color1: #1f1f20;
+    --color2: #2b4c7e;
+    --color3: #567ebb;
+    --color4: #606d80;
+    --color5: #dce0e6;
+}
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--color1);
+    color: var(--color5);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.form-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    flex-direction: column;
+    padding: 2rem;
+    box-sizing: border-box;
+    background-color: var(--color4);
+    /* Fondo para el contenedor */
+    border-radius: 10px;
+    /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra para elevar */
+    max-width: 800px;
+    /* Ancho máximo para el contenedor */
+    margin: 2rem auto;
+    /* Centro del contenedor */
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select {
+    padding: 0.5rem;
+    border: 1px solid var(--color5);
+    border-radius: 5px;
+    background-color: var(--color5);
+    color: var(--color1);
+    font-size: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color3);
+    box-shadow: 0 0 5px var(--color3);
+}
+
+.form-btn {
+    width: 100%;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--color2);
+    color: var(--color5);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form-btn:hover {
+    background-color: var(--color3);
+}
+
+/* Estilo para mensajes de error */
+.error-message {
+    background-color: #f8d7da;
+    /* Fondo rojo claro */
+    color: #721c24;
+    /* Texto rojo oscuro */
+    border: 1px solid #f5c6cb;
+    /* Borde rojo */
+    padding: 1rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera */
+    margin: 1rem 0;
+    /* Espacio superior e inferior */
+}
+
+.error-message i {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    color: #721c24;
+    /* Color del icono */
+}

@@ -1,0 +1,25 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<h1>Cargar Base de Datos</h1>
+
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="archivo">Seleccionar archivo SQL:</label>
+        <input type="file" name="archivo" id="archivo" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Cargar</button>
+</form>
+{% endblock %}

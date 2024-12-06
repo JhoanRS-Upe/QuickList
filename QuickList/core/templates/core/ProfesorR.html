@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Profesor - QuickList</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'core/images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/profesorR.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/styles.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body>
+    {% include 'core/header.html' %}
+    s
+    <div class="form-content">
+        <h2>Registro</h2>
+        <div class="form-group">
+            <label for="userType">Tipo de Usuario</label>
+            <a href="{% url 'registro_alumno' %}"><button type="button" class="form-btn">Registro Alumno</button></a>
+            <hr>
+            <a href="{% url 'registro_profesor' %}"><button type="button" class="form-btn">Registro Profesor</button></a>
+        </div>
+        <div id="form-container">
+            <form id="profesorForm" method="POST" action="{% url 'registro_profesor' %}">
+                {% csrf_token %}
+                <h2>Registro de Profesor</h2>
+                <!-- Mostrar los mensajes de error -->
+                {% if messages %}
+                <div class="error-message">
+                    {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <!-- Mostrar los mensajes de exito -->
+                {% if messages %}
+                <div class="success-message">
+                    {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        <i class="fas fa-check-circle"></i> <!-- Icono de éxito -->
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="correo">Correo electrónico:</label>
+                        <input type="email" id="correo" name="correo" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contrasenia">Contraseña:</label>
+                        <input type="password" id="contrasenia" name="contrasenia" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirmar contraseña:</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombres">Nombre:</label>
+                        <input type="text" id="nombres" name="nombres" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="apellidoP">Apellido Paterno:</label>
+                        <input type="text" id="apellidoP" name="apellidoP" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidoM">Apellido Materno:</label>
+                        <input type="text" id="apellidoM" name="apellidoM" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fechaNac">Fecha de Nacimiento:</label>
+                        <input type="date" id="fechaNac" name="fechaNac" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="genero">Género:</label>
+                        <select id="genero" name="genero" class="form-control" required>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                            <option value="O">Otro</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="clave">Clave del Profesor:</label>
+                        <input type="text" id="clave" name="clave" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="academia">Academia:</label>
+                        <select id="academia" name="academia" class="form-control">
+                            {% for academia in academias %}
+                            <option value="{{ academia.id }}">{{ academia.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="grado">Grado Académico:</label>
+                        <input type="text" id="grado" name="grado" class="form-control">
+                    </div>
+                </div>
+                <button type="submit" class="form-btn">Registrar</button>
+                <hr>
+                <a href="{% url 'login' %}"><button type="button" class="form-btn">Iniciar sesion</button></a>
+            </form>
+        </div>
+    </div>
+
+    {% include 'core/footer.html' %}
+
+    <script src="{% static 'core/js/profesorR.js' %}"></script>
+</body>
+
+</html>

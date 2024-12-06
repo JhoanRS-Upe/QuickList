@@ -1,0 +1,83 @@
+{% extends 'core/profesor_dashboard.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">Modificar Justificante</h2>
+
+    <!-- Mostrar los mensajes de error -->
+    {% if messages %}
+    <div class="error-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <input class="form-control" type="text" id="descripcion" name="descripcion"
+                value="{{ justificante.descripcion }}" required>
+        </div>
+        <div class="form-group">
+            <label for="estado">Estado:</label>
+            <input class="form-control" type="text" id="estado" name="estado" value="{{ justificante.estado }}"
+                required>
+        </div>
+        <div class="form-group">
+            <label for="alumno">Alumno:</label>
+            <select id="alumno" name="alumno" class="form-control">
+                {% for alumno in alumnos %}
+                <option value="{{ alumno.matricula }}">
+                    {{ alumno.matricula }} - {{ alumno.nombres }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="profesor">Profesor:</label>
+            <select id="profesor" name="profesor" class="form-control">
+                {% for profesor in profesores %}
+                <option value="{{ profesor.clave }}">
+                    {{ profesor.clave }} - {{ profesor.nombres }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="clase">Clase:</label>
+            <select id="clase" name="clase" class="form-control">
+                {% for clase_alumno in clases %}
+                <option value="{{ clase_alumno.clase.codigo }}">
+                    {{ clase_alumno.clase.codigo }} - {{ clase_alumno.clase.grado }}°{{ clase_alumno.clase.grupo }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" type="submit">Guardar Cambios</button>
+            <a class="btn" href="{% url 'profesor_justificantes_consulta' %}">Cancelar</a>
+        </div>
+    </form>
+</div>
+<style>
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #e92323;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #218838;
+    }
+</style>
+{% endblock %}

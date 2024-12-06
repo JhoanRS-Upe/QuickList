@@ -1,0 +1,40 @@
+{% extends 'core/alumno_dashboard.html' %}
+
+{% block content %}
+<h1 align="center">Consulta de Justificantes</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="tabla-container">
+    <table class="tabla-resultados">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Profesor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for justificante in justificantes %}
+            <tr>
+                <td>{{ justificante.idJustificante }}</td>
+                <td>{{ justificante.descripcion }}</td>
+                <td>{{ justificante.estado }}</td>
+                <td>{{ justificante.profesor.nombres }} {{ justificante.profesor.apellidoP }} {{ justificante.profesor.apellidoM }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

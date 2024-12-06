@@ -1,0 +1,96 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<div class="grupos-consulta-container">
+    <h2 class="titulo-consulta">Consulta de Grupos</h2>
+
+    {% if messages %}
+    <div class="error-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="GET" action="{% url 'grupos_consulta' %}" class="form-filtros">
+        <div class="form-group">
+            <label for="busqueda">Buscar por Clave o Materia:</label>
+            <input type="text" id="busqueda" name="busqueda" placeholder="Clave o Materia" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="carrera">Carrera:</label>
+            <select id="carrera" name="carrera" class="form-control">
+                <option value="">Todas</option>
+                {% for carrera in carreras %}
+                <option value="{{ carrera.id }}">{{ carrera.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="materia">Materia:</label>
+            <select id="materia" name="materia" class="form-control">
+                <option value="">Todas</option>
+                {% for materia in materias %}
+                <option value="{{ materia.clave }}">{{  materia.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="periodo">Periodo:</label>
+            <select id="periodo" name="periodo" class="form-control">
+                <option value="">Todos</option>
+                {% for periodo in periodos %}
+                <option value="{{ periodo.idPeriodo }}">{{ periodo.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="profesor">Profesor:</label>
+            <select id="profesor" name="profesor" class="form-control">
+                <option value="">Todos</option>
+                {% for profesor in profesores %}
+                <option value="{{ profesor.clave }}">{{ profesor.nombres }} {{ profesor.apellidoP }} {{ profesor.apellidoM }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Consultar</button>
+    </form>
+
+    <!-- Tabla de resultados -->
+    <div class="tabla-container">
+        <table class="tabla-resultados">
+            <thead>
+                <tr>
+                    <th>Clave</th>
+                    <th>Materia</th>
+                    <th>Profesor</th>
+                    <th>Periodo</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grupo in resultados %}
+                <tr>
+                    <td>{{ grupo.codigo }}</td>
+                    <td>{{ grupo.materia.nombre }}</td>
+                    <td>{{ grupo.profesor.nombres }} {{ grupo.profesor.apellidoP }} {{ grupo.profesor.apellidoM }}</td>
+                    <td>{{ grupo.periodo.nombre }} {{ grupo.anio }}</td>
+                    <td>
+                        <a href="{% url 'modificar_grupo' grupo.codigo %}">✏️</a>
+                        <a href="{% url 'eliminar_grupo' grupo.codigo %}">❌</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

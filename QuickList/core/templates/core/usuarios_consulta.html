@@ -1,0 +1,221 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<div class="usuarios-consulta-container">
+    <h2 class="titulo-consulta">Consulta de Usuarios</h2>
+    <p align="center">Selecciona el tipo de usuario que deseas consultar:</p>
+    {% if mensaje_error %}
+    <div class="alert alert-danger">
+        {{ mensaje_error }}
+    </div>
+    {% endif %}
+
+    {% if mensaje_aviso %}
+    <div class="alert alert-warning">
+        {{ mensaje_aviso }}
+    </div>
+    {% endif %}
+
+    <!-- Botones para cambiar entre formularios -->
+    <div class="user-type-buttons">
+        <button class="btn btn-primary" onclick="showForm('administrador')">Administrador</button>
+        <button class="btn btn-primary" onclick="showForm('profesor')">Profesor</button>
+        <button class="btn btn-primary" onclick="showForm('alumno')">Alumno</button>
+    </div>
+
+    <!-- Formularios de filtros por tipo de usuario -->
+    <div id="form-administrador" class="form-container hidden">
+        <form method="GET" action="{% url 'usuarios_consulta' %}" class="form-filtros">
+            <input type="hidden" name="tipo_usuario" value="administrador">
+            <div class="form-group">
+                <label for="busqueda">Buscar por Clave o Correo:</label>
+                <input type="text" id="busqueda" name="busqueda" placeholder="Clave o Correo" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="estado">Estado:</label>
+                <select id="estado" name="estado" class="form-control">
+                    <option value="">Todos</option>
+                    <option value="habilitado">Habilitados</option>
+                    <option value="inhabilitado">Inhabilitados</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Consultar</button>
+        </form>
+    </div>
+
+    <div id="form-profesor" class="form-container hidden">
+        <form method="GET" action="{% url 'usuarios_consulta' %}" class="form-filtros">
+            <input type="hidden" name="tipo_usuario" value="profesor">
+            <div class="form-group">
+                <label for="busqueda">Buscar por Clave o Correo:</label>
+                <input type="text" id="busqueda" name="busqueda" placeholder="Clave o Correo" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="estado">Estado:</label>
+                <select id="estado" name="estado" class="form-control">
+                    <option value="">Todos</option>
+                    <option value="habilitado">Habilitados</option>
+                    <option value="inhabilitado">Inhabilitados</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="academia">Academia:</label>
+                <select id="academia" name="academia" class="form-control">
+                    <option value="">Todas</option>
+                    {% for academia in academias %}
+                    <option value="{{ academia.id }}">{{ academia.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Consultar</button>
+        </form>
+    </div>
+
+    <div id="form-alumno" class="form-container hidden">
+        <form method="GET" action="{% url 'usuarios_consulta' %}" class="form-filtros">
+            <input type="hidden" name="tipo_usuario" value="alumno">
+            <div class="form-group">
+                <label for="busqueda">Buscar por Matrícula o Correo:</label>
+                <input type="text" id="busqueda" name="busqueda" placeholder="Matrícula o Correo" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="estado">Estado:</label>
+                <select id="estado" name="estado" class="form-control">
+                    <option value="">Todos</option>
+                    <option value="habilitado">Habilitados</option>
+                    <option value="inhabilitado">Inhabilitados</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="carrera">Carrera:</label>
+                <select id="carrera" name="carrera" class="form-control">
+                    <option value="">Todas</option>
+                    {% for carrera in carreras %}
+                    <option value="{{ carrera.id }}">{{ carrera.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="grupo">Grupo:</label>
+                <select id="grupo" name="grupo" class="form-control">
+                    <option value="">Todos</option>
+                    {% for clase in clases %}
+                    <option value="{{ clase.codigo }}">{{ clase.materia.nombre }} - {{ clase.grado }} - {{ clase.grupo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Consultar</button>
+        </form>
+    </div>
+
+    <div class="tabla-container">
+        <!-- Tabla para Administradores -->
+        <table class="tabla-resultados" id="tabla-administrador" {% if not mostrar_tabla_admin %} style="display: none;" {% endif %}>
+            <thead>
+                <tr>
+                    <th>Clave Administrativa</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Estado</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in resultados %}
+                <tr>
+                    <td>{{ usuario.claveA }}</td>
+                    <td>{{ usuario.nombres }} {{ usuario.apellidoP }} {{ usuario.apellidoM }}</td>
+                    <td>{{ usuario.correo }}</td>
+                    <td>{{ usuario.estado }}</td>
+                    <td>
+                        <a href="{% if usuario.claveA %}{% url 'modificar_administrador' usuario.claveA %}{% else %}#{% endif %}">✏️</a>
+                        <a href="{% if usuario.claveA %}{% url 'eliminar_administrador' usuario.claveA %}{% else %}#{% endif %}">❌</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+        <!-- Tabla para Profesores -->
+        <table class="tabla-resultados" id="tabla-profesor" {% if not mostrar_tabla_profesor %} style="display: none;" {% endif %}>
+            <thead>
+                <tr>
+                    <th>Clave</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Estado</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in resultados %}
+                <tr>
+                    <td>{{ usuario.clave }}</td>
+                    <td>{{ usuario.nombres }} {{ usuario.apellidoP }} {{ usuario.apellidoM }}</td>
+                    <td>{{ usuario.correo }}</td>
+                    <td>{{ usuario.estado }}</td>
+                    <th>
+                        <a href="{% if usuario.clave %}{% url 'modificar_profesor' usuario.clave %}{% else %}#{% endif %}">✏️</a>
+                        <a href="{% if usuario.clave %}{% url 'eliminar_profesor' usuario.clave %}{% else %}#{% endif %}">❌</a>
+                    </th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+        <!-- Tabla para Alumnos -->
+        <table class="tabla-resultados" id="tabla-alumno" {% if not mostrar_tabla_alumno %} style="display: none;" {% endif %}>
+            <thead>
+                <tr>
+                    <th>Matrícula</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Estado</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in resultados %}
+                <tr>
+                    <td>{{ usuario.matricula }}</td>
+                    <td>{{ usuario.nombres }} {{ usuario.apellidoP }} {{ usuario.apellidoM }}</td>
+                    <td>{{ usuario.correo }}</td>
+                    <td>{{ usuario.estado }}</td>
+                    <td>
+                        <a href="{% if usuario.matricula %}{% url 'modificar_alumno' usuario.matricula %}{% else %}#{% endif %}">✏️</a>
+                        <a href="{% if usuario.matricula %}{% url 'eliminar_alumno' usuario.matricula %}{% else %}#{% endif %}">❌</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function showForm(tipo) {
+        // Ocultar todos los formularios y tablas
+        document.querySelectorAll('.form-container').forEach(function (form) {
+            form.classList.add('hidden');
+        });
+        document.querySelectorAll('.tabla-resultados').forEach(function (table) {
+            table.style.display = 'none';
+        });
+
+        // Mostrar el formulario y la tabla correspondiente
+        document.getElementById('form-' + tipo).classList.remove('hidden');
+        document.getElementById('tabla-' + tipo).style.display = 'table';
+    }
+
+    function showForm(userType) {
+        // Ocultar todos los formularios
+        document.getElementById('form-administrador').classList.add('hidden');
+        document.getElementById('form-profesor').classList.add('hidden');
+        document.getElementById('form-alumno').classList.add('hidden');
+
+        // Mostrar el formulario correspondiente
+        document.getElementById(`form-${userType}`).classList.remove('hidden');
+    }
+</script>
+
+{% endblock %}

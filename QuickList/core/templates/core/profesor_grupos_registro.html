@@ -1,0 +1,72 @@
+{% extends 'core/profesor_dashboard.html' %}
+
+{% block content %}
+    <h1 align="center">Registro de Grupos</h1>
+
+    <!-- Mostrar los mensajes de error -->
+    {% if messages %}
+    <div class="error-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}  
+
+    <form method="POST" action="{% url 'grupos_profesor_registro' %}">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group">
+                <label for="codigo">Código del grupo:</label>
+                <input type="text" id="codigo" name="codigo" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="grado">Grado:</label>
+                <input type="number" id="grado" name="grado" class="form-control" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="grupo">Grupo:</label>
+                <input type="text" id="grupo" name="grupo" class="form-control" maxlength="1" required>
+            </div>
+            <div class="form-group">
+                <label for="anio">Año:</label>
+                <input type="number" id="anio" name="anio" class="form-control" min="2000" max="2099" required>
+            </div>
+            <div class="form-group">
+                <label for="profesor">Profesor:</label>
+                <select id="profesor" name="profesor" class="form-control">
+                    {% for profesor in profesores %}
+                    <option value="{{ profesor.clave }}">{{ profesor.nombres }} {{ profesor.apellidoP }} {{ profesor.apellidoM }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="carrera">Carrera:</label>
+                <select id="carrera" name="carrera" class="form-control">
+                    {% for carrera in carreras %}
+                    <option value="{{ carrera.id }}">{{ carrera.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="periodo">Periodo:</label>
+                <select id="periodo" name="periodo" class="form-control" required>
+                    {% for periodo in periodos %}
+                    <option value="{{ periodo.idPeriodo }}">{{ periodo.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="materia">Materia:</label>
+                <select id="materia" name="materia" class="form-control" required>
+                    {% for materia in materias %}
+                    <option value="{{ materia.clave }}">{{ materia.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Registrar Grupo</button>
+    </form>
+{% endblock %}

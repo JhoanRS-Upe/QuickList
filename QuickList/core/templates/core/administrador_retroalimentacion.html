@@ -1,0 +1,38 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<h1>Retroalimentación del Sistema</h1>
+
+<form method="GET" action="{% url 'generar_reporte_retroalimentacion' %}">
+    <div class="form-group">
+        <label for="fecha_inicio">Fecha de Inicio:</label>
+        <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="fecha_fin">Fecha de Fin:</label>
+        <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Generar Reporte PDF</button>
+</form>
+
+<table class="tabla-resultados">
+    <thead>
+        <tr>
+            <th>Alumno</th>
+            <th>Descripción</th>
+            <th>Calificación</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for retroalimentacion in retroalimentaciones %}
+        <tr>
+            <td>{{ retroalimentacion.alumno.nombres }} {{ retroalimentacion.alumno.apellidoP }} {{ retroalimentacion.alumno.apellidoM }}</td>
+            <td>{{ retroalimentacion.descripcion }}</td>
+            <td>{{ retroalimentacion.calificacion }}</td>
+            <td>{{ retroalimentacion.fecha_reporte }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

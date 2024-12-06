@@ -1,0 +1,61 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">Eliminar Grupo</h2>
+    {% if messages %}
+    <div class="error-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="form-group">
+        <p>¿Está seguro de que desea eliminar el siguiente grupo?</p>
+        <ul class="sidebar-menu">
+            <li><strong>Código:</strong> {{ grupo.codigo }}</li>
+            <li><strong>Grado:</strong> {{ grupo.grado }}</li>
+            <li><strong>Grupo:</strong> {{ grupo.grupo }}</li>
+            <li><strong>Año:</strong> {{ grupo.anio }}</li>
+            <li><strong>Profesor:</strong> {{ grupo.profesor.nombres }} {{ grupo.profesor.apellidoP }}</li>
+            <li><strong>Materia:</strong> {{ grupo.materia.nombre }}</li>
+            <li><strong>Carrera:</strong> {{ grupo.carrera.nombre }}</li>
+            <li><strong>Periodo:</strong> {{ grupo.periodo.nombre }}</li>
+        </ul>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <button class="btn btn-danger" type="submit">Confirmar Eliminación</button>
+            <a class="btn" href="{% url 'grupos_consulta' %}">Cancelar</a>
+        </div>
+    </form>
+</div>
+<style>
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #e92323;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #218838;
+    }
+
+    .btn-danger {
+        background-color: #e92323;
+    }
+
+    .btn-danger:hover {
+        background-color: #c51a1a;
+    }
+</style>
+{% endblock %}

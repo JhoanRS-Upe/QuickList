@@ -1,0 +1,7 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<h1>Respaldo de Base de Datos</h1>
+<a href="{% url 'descargar_respaldo' %}"><button class="btn btn-primary">Respaldo</button></a>
+<a href="{% url 'cargar_base_datos' %}" ><button class="btn btn-secondary">Cargar Base de Datos</button></a>
+{% endblock %}

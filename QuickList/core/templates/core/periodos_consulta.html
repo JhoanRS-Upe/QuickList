@@ -1,0 +1,58 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<div class="periodos-consulta-container">
+    <h2 class="titulo-consulta">Consulta de Periodos</h2>
+
+    <!-- Mostrar los mensajes de error -->
+    {% if messages %}
+    <div class="error-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="GET" action="{% url 'periodos_consulta' %}" class="form-filtros">
+        <div class="form-group">
+            <label for="busqueda">Buscar por Nombre:</label>
+            <input type="text" id="busqueda" name="busqueda" placeholder="Nombre del periodo" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Consultar</button>
+    </form>
+
+    <!-- Tabla de resultados -->
+    <div class="tabla-container">
+        <table class="tabla-resultados">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Inicial</th>
+                    <th>Año</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for periodo in periodos %}
+                <tr>
+                    <td>{{ periodo.nombre }}</td>
+                    <td>{{ periodo.inicial }}</td>
+                    <td>{{ periodo.anio }}</td>
+                    <td>
+                        <a href="{% url 'modificar_periodo' periodo.idPeriodo %}">✏️</a>
+                        <a href="{% url 'eliminar_periodo' periodo.idPeriodo %}">❌</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No se encontraron periodos.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

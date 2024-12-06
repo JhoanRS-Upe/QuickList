@@ -1,0 +1,34 @@
+{% extends 'core/alumno_dashboard.html' %}
+
+{% block content %}
+<h1 align="center">Registro de Justificantes</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="POST" action="{% url 'alumno_justificantes_registro' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" name="descripcion" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="grupo">Grupo:</label>
+        <select id="grupo" name="grupo" class="form-control">
+            {% for grupo in grupos %}
+            <option value="{{ grupo.codigo }}">{{ grupo.codigo }} - {{ grupo.materia.nombre }} - {{ grupo.profesor.nombres }} {{ grupo.profesor.apellidoP }} {{ grupo.profesor.apellidoM }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Registrar Justificante</button>
+</form>
+{% endblock %}

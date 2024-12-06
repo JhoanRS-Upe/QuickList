@@ -1,0 +1,26 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<h1 align="center">Registro de Academias</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="POST" action="{% url 'academias_registro' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="nombre">Nombre de la academia:</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-success">Registrar Academia</button>
+</form>
+{% endblock %}

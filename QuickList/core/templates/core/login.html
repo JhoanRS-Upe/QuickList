@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - QuickList</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'core/images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/login.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body>
+    {% include 'core/header.html' %}
+
+    <div class="form-content">
+        <!-- Formulario de inicio de sesión -->
+        <form id="loginForm" method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="login">
+            <h2>Iniciar Sesión</h2>
+            {% if error %} 
+                <div class="error-message"> 
+                    <i class="fas fa-exclamation-circle"></i> <!-- Icono de exclamación --> 
+                    {{error }} 
+                </div> 
+            {% endif %}
+            <div class="form-group">
+                <label for="loginUser">Correo Electrónico</label>
+                <input type="email" id="loginUser" name="correo" placeholder="Correo Electrónico" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Contraseña</label>
+                <input type="password" id="loginPassword" name="contrasenia" placeholder="Contraseña" required>
+            </div>
+            <button type="submit" class="form-btn">Entrar</button>
+            <p class="register-link">¿No tienes una cuenta? <a href="{% url 'registro_alumno' %}">Regístrate aquí</a></p>
+        </form>
+    </div>
+
+    {% include 'core/footer.html' %}
+
+    <script src="{% static 'core/js/login.js' %}"></script>
+</body>
+
+</html>

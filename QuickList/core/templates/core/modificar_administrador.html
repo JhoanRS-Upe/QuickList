@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Modificar Administrador</h2>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <label for="nombres">Nombres:</label>
+    <input type="text" id="nombres" name="nombres" value="{{ administrador.nombres }}" required>
+
+    <label for="apellidos">Apellido Paterno:</label>
+    <input type="text" id="apellidos" name="apellidoP" value="{{ administrador.apellidoP }}" required>
+
+    <label for="apellidos">Apellido Materno:</label>
+    <input type="text" id="apellidos" name="apellidoM" value="{{ administrador.apellidoM }}" required>
+
+    <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ administrador.fecha_nacimiento }}"
+        required>
+
+    <label for="genero">Género:</label>
+    <select id="genero" name="genero">
+        <option value="M" {% if administrador.genero=='M' %}selected{% endif %}>Masculino</option>
+        <option value="F" {% if administrador.genero=='F' %}selected{% endif %}>Femenino</option>
+    </select>
+
+    <label for="correo">Correo:</label>
+    <input type="email" id="correo" name="correo" value="{{ administrador.correo }}" required>
+
+    <label for="estado">Estado:</label>
+    <select id="estado" name="estado">
+        <option value="1" {% if administrador.estado %}selected{% endif %}>Habilitado</option>
+        <option value="0" {% if not administrador.estado %}selected{% endif %}>Inhabilitado</option>
+    </select>
+
+    <label for="rango">Rango:</label>
+    <input type="text" id="rango" name="rango" value="{{ administrador.rango }}" required>
+
+    <button type="submit">Guardar Cambios</button>
+</form>
+<a href="{% url 'consulta_usuarios' %}">Cancelar</a>
+{% endblock %}

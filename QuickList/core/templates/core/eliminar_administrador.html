@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Eliminar Administrador</h2>
+
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<p>¿Está seguro de que desea eliminar el siguiente administrador?</p>
+
+<ul>
+    <li><strong>Nombre:</strong> {{ administrador.nombres }} {{ administrador.apellidos }}</li>
+    <li><strong>Correo:</strong> {{ administrador.correo }}</li>
+    <li><strong>Rango:</strong> {{ administrador.rango }}</li>
+</ul>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Eliminar</button>
+</form>
+<a href="{% url 'consulta_usuarios' %}">Cancelar</a>
+{% endblock %}

@@ -1,0 +1,89 @@
+<!-- sidebar_profesor.html -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <h2>QuickList</h2>
+    </div>
+    <ul class="sidebar-menu">
+        <!-- Grupos -->
+        <li class="{% if request.path == '/grupos/' %}active{% endif %}">
+            <a href="#" class="toggle-submenu"><i class="fa fa-users-cog"></i> Grupos <i
+                    class="fa fa-chevron-down"></i></a>
+            <div class="submenu">
+                <ul>
+                    <li>
+                        <a href="{% url 'alumno_grupos_inscribirse' %}"><i class="fa fa-users-cog"></i> Inscribirse </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'alumno_grupos_consulta' %}"><i class="fa fa-users-cog"></i> Consultar mis grupos</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <!-- Justificantes -->
+        <li class="{% if request.path == '/justificantes/' %}active{% endif %}">
+            <a href="#" class="toggle-submenu"><i class="fa fa-file-alt"></i> Justificantes <i
+                    class="fa fa-chevron-down"></i></a>
+            <div class="submenu">
+                <ul>
+                    <li>
+                        <a href="{% url 'alumno_justificantes_registro' %}"><i class="fa fa-file-alt"></i> Crear Justificante </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'alumno_justificantes_consulta' %}"><i class="fa fa-file-alt"></i> Consulta mis Justificantes</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a href="#" class="toggle-submenu"><i class="fa fa-calendar-alt"></i> Reportes <i class="fa fa-chevron-down"></i></a>
+            <div class="submenu">
+                <ul>
+                    <li>
+                        <a href="{% url 'reporte_alumno' %}"><i class="fa fa-users-cog"></i> Reporte de mis Asistencias</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <!-- Fotos -->
+        <li class="{% if request.path == '/fotos/' %}active{% endif %}">
+            <a href="{% url 'alumno_subir_foto' %}"><i class="fa fa-images"></i> Fotos</a>
+        </li>
+        <li>
+            <a href="#" class="toggle-submenu"><i class="fa fa-calendar-alt"></i> Sistema <i class="fa fa-chevron-down"></i></a>
+            <div class="submenu">
+                <ul>
+                    <li>
+                        <a href="{% url 'alumno_retroalimentacion' %}"><i class="fa fa-comment-alt"></i> Retroalimentación del Sistema</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+    <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+        {% csrf_token %}
+        <button type="submit" class="logout-btn">Cerrar sesión</button>
+    </form>
+</aside>
+
+<script>
+    // Lógica para manejar el comportamiento de mostrar/ocultar submenús
+    document.querySelectorAll('.toggle-submenu').forEach(toggle => {
+        toggle.addEventListener('click', function (event) {
+            event.preventDefault();
+            const submenu = this.nextElementSibling;
+            const icon = this.querySelector('.fa-chevron-down');
+
+            if (submenu.style.display === 'none' || !submenu.style.display) {
+                submenu.style.display = 'block';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                submenu.style.display = 'none';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        });
+    });
+</script>

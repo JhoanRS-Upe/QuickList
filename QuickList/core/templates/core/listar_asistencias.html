@@ -1,0 +1,23 @@
+{% extends 'core/profesor_dashboard.html' %}
+
+{% block content %}
+<h1>Listas de Asistencia para el Grupo {{ grupo.codigo }}</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for lista in listas_asistencia %}
+        <tr>
+            <td>{{ lista.fecha }}</td>
+            <td>
+                <a href="{% url 'editar_asistencia' lista.idLista %}">Editar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

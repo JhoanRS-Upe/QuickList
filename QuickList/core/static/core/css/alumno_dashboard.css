@@ -1,0 +1,390 @@
+/* === Paleta de colores === */
+:root {
+    --color1: #1f1f20;
+    /* Fondo principal */
+    --color2: #2b4c7e;
+    /* Fondo del menú lateral */
+    --color3: #567ebb;
+    /* Hover y elementos destacados */
+    --color4: #606d80;
+    /* Fondo del contenido principal */
+    --color5: #dce0e6;
+    /* Texto y detalles */
+}
+
+/* === Estilos Globales === */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--color1);
+    color: var(--color5);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* === Contenedor General === */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--color1);
+}
+
+/* === Menú Lateral === */
+.sidebar {
+    width: 250px;
+    background-color: var(--color2);
+    color: var(--color5);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-header h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--color5);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.sidebar-menu li {
+    margin: 0.5rem 0;
+}
+
+.sidebar-menu li a {
+    text-decoration: none;
+    color: var(--color5);
+    font-size: 1rem;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-menu li a i {
+    margin-right: 0.5rem;
+}
+
+.sidebar-menu li a:hover {
+    background-color: var(--color3);
+}
+
+.logout-btn {
+    background-color: #ff4b5c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100%;
+    text-align: left;
+}
+
+.logout-btn:hover {
+    background-color: #e04352;
+}
+
+/* === Contenido Principal === */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    background-color: var(--color4);
+    color: var(--color5);
+    border-radius: 8px;
+    margin: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.main-content h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.main-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* === Estilos del Formulario === */
+.form-container {
+    background-color: var(--color4);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    margin: auto;
+}
+
+.form-title {
+    font-size: 1.8rem;
+    color: var(--color5);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--color5);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid var(--color5);
+    border-radius: 5px;
+    background-color: var(--color1);
+    color: var(--color5);
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--color3);
+    box-shadow: 0 0 5px var(--color3);
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1.25rem;
+}
+
+.form-row .form-group {
+    width: 48%;
+    /* Asegura que los campos se alineen en dos columnas */
+}
+
+.form-row .form-group input,
+.form-row .form-group select {
+    width: 100%;
+}
+
+.form-row .form-group label {
+    font-size: 1.1rem;
+}
+
+.form-group .form-control {
+    padding: 0.8rem;
+    /* Ajuste para mayor comodidad */
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    background-color: var(--color3);
+    color: var(--color5);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: var(--color2);
+}
+
+/* === Botones de Cambio de Formulario === */
+.user-type-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.user-type-buttons .btn {
+    margin: 0 1rem;
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.user-type-buttons .btn:hover {
+    background-color: var(--color3);
+}
+
+/* === Mensajes de Error === */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.error-message .fas {
+    font-size: 1.5rem;
+}
+
+/* === Estilo para el botón de éxito === */
+.btn.btn-success {
+    background-color: #28a745;
+    /* Color verde de éxito */
+    color: white;
+    /* Texto en blanco */
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn.btn-success:hover {
+    background-color: #218838;
+    /* Color verde más oscuro al pasar el ratón */
+    transform: translateY(-2px);
+    /* Ligero movimiento hacia arriba al pasar el ratón */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    /* Sombra más pronunciada al hacer hover */
+}
+
+.btn.btn-success:active {
+    background-color: #1e7e34;
+    /* Color verde aún más oscuro al hacer clic */
+    transform: translateY(2px);
+    /* Movimiento hacia abajo al hacer clic */
+}
+
+.btn.btn-success:focus {
+    outline: none;
+    /* Remueve el contorno por defecto */
+    box-shadow: 0 0 0 3px rgba(72, 182, 82, 0.5);
+    /* Sombra de enfoque personalizada */
+}
+
+.hidden {
+    display: none !important;
+    /* Asegura que el formulario esté oculto */
+}
+
+.form {
+    display: none;
+    /* Inicialmente ocultamos todos los formularios */
+}
+
+.form:not(.hidden) {
+    display: block;
+    /* Mostramos solo el formulario correspondiente */
+}
+
+/* Personalización de la tabla */
+.table {
+    background-color: var(--color4);
+    color: var(--color5);
+}
+
+.table th {
+    background-color: var(--color2);
+    color: var(--color5);
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+    /* Alternar filas con un fondo más claro */
+}
+
+.table tbody tr:hover {
+    background-color: var(--color3);
+    /* Color de hover para filas */
+}
+
+.table .btn {
+    border-radius: 5px;
+}
+
+/* Estilos de botones */
+.btn-primary {
+    background-color: var(--color2);
+    border-color: var(--color2);
+}
+
+.btn-primary:hover {
+    background-color: var(--color3);
+    border-color: var(--color3);
+}
+
+.btn-warning {
+    background-color: #f0ad4e;
+    border-color: #f0ad4e;
+}
+
+.btn-warning:hover {
+    background-color: #ec971f;
+    border-color: #ec971f;
+}
+
+.btn-danger {
+    background-color: #d9534f;
+    border-color: #d9534f;
+}
+
+.btn-danger:hover {
+    background-color: #c9302c;
+    border-color: #c9302c;
+}
+
+/* Botones de acción de la tabla */
+.tabla-container {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+.tabla-resultados {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    background-color: #f9f9f9;
+}
+
+.tabla-resultados thead {
+    background: #007bff;
+    color: white;
+}
+
+.tabla-resultados th,
+.tabla-resultados td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.tabla-resultados tbody tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+.tabla-resultados tbody td {
+    color: #333333;
+    font-size: 14px;
+    text-align: center;
+}
+
+.table .btn-danger,
+.table .btn-warning,
+.table .btn-primary {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    margin-right: 5px;
+}

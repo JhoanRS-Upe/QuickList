@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profesor Dashboard - QuickList</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/profesor_dashboard.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body>
+    {% include 'core/header.html' %}
+
+    <div class="dashboard-container">
+        <!-- Menú Lateral -->
+        {% include 'core/sidebarP.html' %}
+
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            {% block content %}
+            <h1>Bienvenido al Panel del Profesor</h1>
+            <p>Desde aquí puedes gestionar todas las configuraciones de QuickList.</p>
+            {% endblock %}
+        </main>
+    </div>
+
+    {% include 'core/footer.html' %}
+</body>
+
+</html>

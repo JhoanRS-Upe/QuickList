@@ -1,0 +1,54 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<h1 align="center">Registro de Materias</h1>
+
+<!-- Mostrar mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="POST" action="{% url 'materias_registro' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="clave">Clave de la materia:</label>
+        <input type="text" id="clave" name="clave" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="creditos">Créditos:</label>
+        <input type="number" id="creditos" name="creditos" class="form-control" min="1" required>
+    </div>
+    <div class="form-group">
+        <label for="eje">Eje:</label>
+        <input type="text" id="eje" name="eje" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="carrera">Carrera:</label>
+        <select id="carrera" name="carrera" class="form-control">
+            {% for carrera in carreras %}
+            <option value="{{ carrera.id }}">{{ carrera.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="periodo">Periodo:</label>
+        <select id="periodo" name="periodo" class="form-control">
+            {% for periodo in periodos %}
+            <option value="{{ periodo.idPeriodo }}">{{ periodo.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Registrar Materia</button>
+</form>
+{% endblock %}

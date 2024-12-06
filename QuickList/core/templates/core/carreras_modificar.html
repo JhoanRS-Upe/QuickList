@@ -1,0 +1,64 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">Modificar Carrera</h2>
+
+    {% if messages %}
+    <div class="error-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="nombre">Nombre de la carrera:</label>
+            <input class="form-control" type="text" id="nombre" name="nombre" value="{{ carrera.nombre }}" required>
+        </div>
+        <div class="form-group">
+            <label for="cuatrimestres">Número de Cuatrimestres:</label>
+            <input class="form-control" type="number" id="cuatrimestres" name="cuatrimestres"
+                value="{{ carrera.cuatrimestres }}" required>
+        </div>
+        <div class="form-group">
+            <label for="alumnosEgre">Número de Egresados:</label>
+            <input class="form-control" type="number" id="alumnosEgre" name="alumnosEgre"
+                value="{{ carrera.alumnosEgre }}" required>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" type="submit">Guardar Cambios</button>
+            <a class="btn" href="{% url 'carreras_consulta' %}">Cancelar</a>
+        </div>
+    </form>
+</div>
+<style>
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #e92323;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #218838;
+    }
+
+    .btn-danger {
+        background-color: #e92323;
+    }
+
+    .btn-danger:hover {
+        background-color: #c51a1a;
+    }
+</style>
+{% endblock %}

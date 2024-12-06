@@ -1,0 +1,34 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<h1 align="center">Registro de Carreras</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="POST" action="{% url 'carreras_registro' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="nombre">Nombre de la carrera:</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="cuatrimestres">Número de Cuatrimestres:</label>
+        <input type="number" id="cuatrimestres" name="cuatrimestres" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="alumnosEgre">Número de Egresados:</label>
+        <input type="number" id="alumnosEgre" name="alumnosEgre" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-success">Registrar Carrera</button>
+</form>
+{% endblock %}

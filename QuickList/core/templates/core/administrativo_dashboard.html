@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrativo Dashboard - QuickList</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/administrativo_dashboard.css' %}">
+    <script src="{% static 'core/js/administrativo_dashboard.js' %}" defer></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" defer></script>
+</head>
+
+<body>
+    {% include 'core/header.html' %}
+
+    <div class="dashboard-container">
+        <!-- Menú Lateral -->
+        {% include 'core/sidebar.html' %}
+
+        <!-- Contenido Principal -->
+        <main class="main-content">
+
+            <!-- Renderizado dinámico de la sección -->
+            {% block content %}
+            <h1>Bienvenido al Panel Administrativo</h1>
+            <p>Desde aquí puedes gestionar todas las configuraciones de QuickList.</p>
+            {% endblock %}
+        </main>
+    </div>
+
+    {% include 'core/footer.html' %}
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+{% extends 'core/profesor_dashboard.html' %}
+
+{% block content %}
+<h1>Lista de Asistencia para el Grupo {{ grupo.codigo }}</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre del Alumno</th>
+            {% for fecha in fechas %}
+            <th>{{ fecha }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for alumno in alumnos %}
+        <tr>
+            <td>{{ alumno.alumno.nombres }} {{ alumno.alumno.apellidoP }} {{ alumno.alumno.apellidoM }}</td>
+            {% for fecha in fechas %}
+            <td>
+                {% for asistencia in lista_asistencia %}
+                    {% if asistencia.clase_alumno.alumno == alumno.alumno and asistencia.lista.fecha == fecha %}
+                        {{ asistencia.calificacion }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<style>
+    .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+}
+</style>
+{% endblock %}

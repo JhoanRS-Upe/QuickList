@@ -1,0 +1,49 @@
+{% extends 'core/profesor_dashboard.html' %}
+
+{% block content %}
+<h1 align="center">Iniciar Pase de Lista</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="camera-container" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+</div>
+
+<form method="POST" action="{% url 'iniciar_pase_lista' grupo.codigo %}" style="display: flex; justify-content: center; margin-top: 20px;">
+    {% csrf_token %}
+    <input type="hidden" id="foto" name="foto">
+    <button type="submit" class="btn btn-primary" onclick="capturarFoto()">Iniciar Pase de Lista</button>
+</form>
+
+<script>
+    // Acceder a la cámara
+    var video = document.getElementById('video');
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            video.srcObject = stream;
+        })
+        .catch(function(err) {
+            console.error("Error al acceder a la cámara: ", err);
+        });
+
+    function capturarFoto() {
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        var dataURL = canvas.toDataURL('image/png');
+        document.getElementById('foto').value = dataURL;
+    }
+</script>
+{% endblock %}

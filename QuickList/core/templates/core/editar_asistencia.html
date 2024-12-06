@@ -1,0 +1,27 @@
+{% extends 'core/profesor_dashboard.html' %}
+
+{% block content %}
+<h1>Editar Asistencia para el {{ lista_asistencia.fecha }}</h1>
+<form method="POST">
+    {% csrf_token %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre del Alumno</th>
+                <th>Calificación</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for alumno_lista in alumnos_lista %}
+            <tr>
+                <td>{{ alumno_lista.clase_alumno.alumno.nombres }} {{ alumno_lista.clase_alumno.alumno.apellidoP }} {{ alumno_lista.clase_alumno.alumno.apellidoM }}</td>
+                <td>
+                    <input type="text" name="calificacion_{{ alumno_lista.id }}" value="{{ alumno_lista.calificacion }}">
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>
+{% endblock %}

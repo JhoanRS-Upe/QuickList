@@ -1,0 +1,75 @@
+<!-- sidebar_profesor.html -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <h2>QuickList</h2>
+    </div>
+    <ul class="sidebar-menu">
+        <!-- Grupos -->
+        <li class="{% if request.path == '/grupos/' %}active{% endif %}">
+            <a href="#" class="toggle-submenu"><i class="fa fa-users-cog"></i> Grupos <i
+                    class="fa fa-chevron-down"></i></a>
+            <div class="submenu">
+                <ul>
+                    <li>
+                        <a href="{% url 'grupos_profesor_registro' %}"><i class="fa fa-users-cog"></i> Registro</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'grupos_profesor_consulta' %}"><i class="fa fa-users-cog"></i> Consulta</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <!-- Justificantes -->
+        <li class="{% if request.path == '/justificantes/' %}active{% endif %}">
+            <a href="#" class="toggle-submenu"><i class="fa fa-file-alt"></i> Justificantes <i
+                    class="fa fa-chevron-down"></i></a>
+            <div class="submenu">
+                <ul>
+                    <li>
+                        <a href="{% url 'profesor_justificantes_consulta' %}"><i class="fa fa-file-alt"></i> Consulta
+                            Justificantes</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a href="#" class="toggle-submenu"><i class="fa fa-calendar-alt"></i> Reportes <i class="fa fa-chevron-down"></i></a>
+            <div class="submenu">
+                <ul>
+                    <li>
+                        <a href="{% url 'reporte_profesor' %}"><i class="fa fa-users-cog"></i> Reporte de mis Grupos</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'reporte_lista_asistencia_profesor' %}"><i class="fa fa-users-cog"></i> Lista de Asistencia</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+    <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+        {% csrf_token %}
+        <button type="submit" class="logout-btn">Cerrar sesión</button>
+    </form>
+</aside>
+
+<script>
+    // Lógica para manejar el comportamiento de mostrar/ocultar submenús
+    document.querySelectorAll('.toggle-submenu').forEach(toggle => {
+        toggle.addEventListener('click', function (event) {
+            event.preventDefault();
+            const submenu = this.nextElementSibling;
+            const icon = this.querySelector('.fa-chevron-down');
+
+            if (submenu.style.display === 'none' || !submenu.style.display) {
+                submenu.style.display = 'block';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                submenu.style.display = 'none';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        });
+    });
+</script>

@@ -1,0 +1,46 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<h1 align="center">Registro de Justificantes</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="POST" action="{% url 'justificantes_registro' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" name="descripcion" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="estado">Estado:</label>
+        <input type="text" id="estado" name="estado" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="alumno">Alumno:</label>
+        <select id="alumno" name="alumno" class="form-control">
+            {% for alumno in alumnos %}
+            <option value="{{ alumno.matricula }}">{{ alumno.matricula }} - {{ alumno.nombres }} - {{ alumno.apellidoP }} - {{ alumno.apellidoM }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="profesor">Profesor:</label>
+        <select id="profesor" name="profesor" class="form-control">
+            {% for profesor in profesores %}
+            <option value="{{ profesor.clave }}">{{ profesor.clave }} - {{ profesor.nombres }} - {{ profesor.apellidoP }} - {{ profesor.apellidoM }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Registrar Justificante</button>
+</form>
+{% endblock %}

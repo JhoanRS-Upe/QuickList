@@ -1,0 +1,64 @@
+{% extends 'core/profesor_dashboard.html' %}
+
+{% block content %}
+<div class="consulta-container">
+    <h2 class="titulo-consulta">Mis Grupos</h2>
+
+    <!-- Mostrar los mensajes de error -->
+    {% if messages %}
+    <div class="error-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="GET" action="{% url 'grupos_profesor_consulta' %}" class="form-busqueda">
+        <div class="form-group">
+            <label for="busqueda">Buscar por Clave o Materia:</label>
+            <input type="text" id="busqueda" name="busqueda" placeholder="Clave o Materia" class="form-control"
+                value="{{ busqueda }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <div class="tabla-container">
+                <table class="tabla-resultados">
+            <thead>
+                <tr>
+                    <th>Clave</th>
+                    <th>Materia</th>
+                    <th>Carrera</th>
+                    <th>Periodo</th>
+                    <th>Opciones</th>
+                    <th>Lista</th>
+                    <th>Editar Asistencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grupo in resultados %}
+                <tr>
+                    <td>{{ grupo.codigo }}</td>
+                    <td>{{ grupo.materia.nombre }}</td>
+                    <td>{{ grupo.carrera.nombre }}</td>
+                    <td>{{ grupo.periodo.nombre }} {{ grupo.periodo.anio }}</td>
+                    <td>
+                        <a href="{% url 'grupos_profesor_modificar' grupo.codigo %}">✏️</a>
+                        <a href="{% url 'grupos_profesor_eliminar' grupo.codigo %}">❌</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'iniciar_pase_lista' grupo.codigo %}">Iniciar pase de lista</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'listar_asistencias' grupo.codigo %}">Editar Asistencia</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

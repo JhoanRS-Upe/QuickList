@@ -1,0 +1,22 @@
+{% extends 'core/profesor_dashboard.html' %}
+
+{% block content %}
+<h1>Generar Reporte de Asistencia de Mis Grupos</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="POST" action="{% url 'reporte_profesor' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Generar Reporte</button>
+</form>
+{% endblock %}

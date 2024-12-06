@@ -1,0 +1,264 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<div class="main-content">
+    <h1 align="center">Registro de Usuarios</h1>
+    <p  align="center">Selecciona el tipo de usuario que deseas registrar:</p>
+
+    <!-- Botones para cambiar entre formularios -->
+    <div class="user-type-buttons">
+        <button class="btn btn-primary" onclick="showForm('administrador')">Administrador</button>
+        <button class="btn btn-primary" onclick="showForm('profesor')">Profesor</button>
+        <button class="btn btn-primary" onclick="showForm('alumno')">Alumno</button>
+    </div>
+
+    <!-- Mostrar los mensajes de error -->
+    {% if messages %}
+    <div class="error-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Mostrar los mensajes de exito -->
+    {% if messages %}
+    <div class="success-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-check-circle"></i> <!-- Icono de éxito -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Formulario dinámico -->
+    <div id="form-container">
+        <!-- Administrador Form -->
+        <form id="form-administrador" class="form hidden" method="POST">
+            {% csrf_token %}
+            <h2>Registrar Administrador</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="user_type">Tipo de usuario</label>
+                    <select class="form-control" id="user_type" name="user_type" required>
+                        <option value="administrador">Administrador</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="admin_claveA">Clave Administrativa:</label>
+                    <input type="text" id="admin_claveA" name="administrador_claveA" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin_nombres">Nombres:</label>
+                    <input type="text" id="admin_nombres" name="administrador_nombres" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin_apellidoP">Apellido Paterno:</label>
+                    <input type="text" id="admin_apellidoP" name="administrador_apellidoP" class="form-control"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="admin_apellidoM">Apellido Materno:</label>
+                    <input type="text" id="admin_apellidoM" name="administrador_apellidoM" class="form-control"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="admin_fechaNac">Fecha de Nacimiento:</label>
+                    <input type="date" id="admin_fechaNac" name="administrador_fechaNac" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin_genero">Género:</label>
+                    <select id="admin_genero" name="administrador_genero" class="form-control" required>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                        <option value="O">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="admin_correo">Correo:</label>
+                    <input type="email" id="admin_correo" name="administrador_correo" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin_contrasenia">Contraseña:</label>
+                    <input type="password" id="admin_contrasenia" name="administrador_contrasenia" class="form-control"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="admin_estado">Estado:</label>
+                    <select id="admin_estado" name="administrador_estado" class="form-control">
+                        <option value="1">Habilitado</option>
+                        <option value="0">Inhabilitado</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Registrar Administrador</button>
+        </form>
+    </div>
+
+    <div id="form-container">
+        <!-- Profesor Form -->
+        <form id="form-profesor" class="form hidden" method="POST">
+            {% csrf_token %}
+            <h2>Registrar Profesor</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="user_type">Tipo de usuario</label>
+                    <select class="form-control" id="user_type" name="user_type" required>
+                        <option value="profesor">Profesor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="prof_clave">Clave:</label>
+                    <input type="text" id="prof_clave" name="profesor_clave" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="prof_nombres">Nombres:</label>
+                    <input type="text" id="prof_nombres" name="profesor_nombres" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="prof_apellidoP">Apellido Paterno:</label>
+                    <input type="text" id="prof_apellidoP" name="profesor_apellidoP" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="prof_apellidoM">Apellido Materno:</label>
+                    <input type="text" id="prof_apellidoM" name="profesor_apellidoM" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="prof_fechaNac">Fecha de Nacimiento:</label>
+                    <input type="date" id="prof_fechaNac" name="profesor_fechaNac" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="prof_genero">Género:</label>
+                    <select id="prof_genero" name="profesor_genero" class="form-control" required>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                        <option value="O">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="prof_grado">Grado Académico:</label>
+                    <input type="text" id="prof_grado" name="profesor_grado" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="prof_academia">Academia:</label>
+                    <select id="prof_academia" name="profesor_academia" class="form-control">
+                        {% for academia in academias %}
+                        <option value="{{ academia.id }}">{{ academia.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="prof_correo">Correo:</label>
+                    <input type="email" id="prof_correo" name="profesor_correo" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="prof_contrasenia">Contraseña:</label>
+                    <input type="password" id="prof_contrasenia" name="profesor_contrasenia" class="form-control"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="prof_estado">Estado:</label>
+                    <select id="prof_estado" name="profesor_estado" class="form-control">
+                        <option value="1">Habilitado</option>
+                        <option value="0">Inhabilitado</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Registrar Profesor</button>
+        </form>
+    </div>
+
+    <div id="form-container">
+        <!-- Alumno Form -->
+        <form id="form-alumno" class="form hidden" method="POST">
+            {% csrf_token %}
+            <h2>Registrar Alumno</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="user_type">Tipo de usuario</label>
+                    <select class="form-control" id="user_type" name="user_type" required>
+                        <option value="alumno">Alumno</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="alumno_matricula">Matrícula:</label>
+                    <input type="text" id="alumno_matricula" name="alumno_matricula" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="alumno_nombres">Nombres:</label>
+                    <input type="text" id="alumno_nombres" name="alumno_nombres" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="alumno_apellidoP">Apellido Paterno:</label>
+                    <input type="text" id="alumno_apellidoP" name="alumno_apellidoP" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="alumno_apellidoM">Apellido Materno:</label>
+                    <input type="text" id="alumno_apellidoM" name="alumno_apellidoM" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="alumno_fechaNac">Fecha de Nacimiento:</label>
+                    <input type="date" id="alumno_fechaNac" name="alumno_fechaNac" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="alumno_genero">Género:</label>
+                    <select id="alumno_genero" name="alumno_genero" class="form-control" required>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                        <option value="O">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="alumno_carrera">Carrera:</label>
+                    <select id="alumno_carrera" name="alumno_carrera" class="form-control">
+                        {% for carrera in carreras %}
+                        <option value="{{ carrera.id }}">{{ carrera.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="alumno_correo">Correo:</label>
+                    <input type="email" id="alumno_correo" name="alumno_correo" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="alumno_contrasenia">Contraseña:</label>
+                    <input type="password" id="alumno_contrasenia" name="alumno_contrasenia" class="form-control"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="alumno_estado">Estado:</label>
+                    <select id="alumno_estado" name="alumno_estado" class="form-control">
+                        <option value="1">Habilitado</option>
+                        <option value="0">Inhabilitado</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Registrar Alumno</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function showForm(userType) {
+        // Hide all forms
+        document.getElementById('form-administrador').classList.add('hidden');
+        document.getElementById('form-profesor').classList.add('hidden');
+        document.getElementById('form-alumno').classList.add('hidden');
+
+        // Show the form corresponding to the selected user type
+        if (userType === 'administrador') {
+            document.getElementById('form-administrador').classList.remove('hidden');
+        } else if (userType === 'profesor') {
+            document.getElementById('form-profesor').classList.remove('hidden');
+        } else if (userType === 'alumno') {
+            document.getElementById('form-alumno').classList.remove('hidden');
+        }
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">Eliminar Profesor</h2>
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="form-group">
+        <p>¿Está seguro de que desea eliminar al siguiente profesor?</p>
+        <ul class="sidebar-menu">
+            <li><strong>Clave:</strong> {{ profesor.clave }}</li>
+            <li><strong>Nombre:</strong> {{ profesor.nombres }} {{ profesor.apellidoP }} {{ profesor.apellidoM }}</li>
+            <li><strong>Correo:</strong> {{ profesor.correo }}</li>
+        </ul>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <button class="btn btn-success" type="submit">Confirmar</button>
+            <a class="btn" href="{% url 'usuarios_consulta' %}">Cancelar</a>
+        </div>
+    </form>
+</div>
+<style>
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #e92323;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #218838;
+    }
+</style>
+{% endblock %}

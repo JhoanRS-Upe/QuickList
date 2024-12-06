@@ -1,0 +1,31 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<h1>Generar Reporte de Asistencia por Grupo</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="POST" action="{% url 'reporte_grupo' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="grupo">Seleccionar Grupo:</label>
+        <select id="grupo" name="grupo" class="form-control" required>
+            <option value="">Seleccione un grupo</option>
+            {% for grupo in grupos %}
+            <option value="{{ grupo.codigo }}">{{ grupo.codigo }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Generar Reporte</button>
+</form>
+{% endblock %}

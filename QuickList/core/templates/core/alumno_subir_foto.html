@@ -1,0 +1,35 @@
+{% extends 'core/alumno_dashboard.html' %}
+
+{% block content %}
+<h1 align="center">Subir Fotos de Rostro</h1>
+
+<!-- Mostrar los mensajes de error -->
+{% if messages %}
+<div class="error-message">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="POST" action="{% url 'alumno_subir_foto' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="foto">Seleccionar Fotos:</label>
+        <input type="file" id="foto" name="foto" class="form-control" multiple required>
+    </div>
+    <button type="submit" class="btn btn-success">Subir Fotos</button>
+</form>
+
+<h2 align="center">Fotos Subidas</h2>
+<div class="fotos-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
+    {% for foto in fotos %}
+    <div class="foto-item" style="margin: 10px; max-width: 200px;">
+        <img src="{{ foto.imagen.url }}" alt="Foto de {{ alumno.nombres }}" style="width: 100%; height: auto;">
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

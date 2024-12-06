@@ -1,0 +1,53 @@
+{% extends 'core/administrativo_dashboard.html' %}
+
+{% block content %}
+<div class="academias-consulta-container">
+    <h2 class="titulo-consulta">Consulta de Academias</h2>
+
+    {% if messages %}
+    <div class="error-message">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icono de error -->
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="GET" action="{% url 'academias_consulta' %}" class="form-filtros">
+        <div class="form-group">
+            <label for="busqueda">Buscar por Nombre:</label>
+            <input type="text" id="busqueda" name="busqueda" placeholder="Nombre de la academia" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Consultar</button>
+    </form>
+
+    <!-- Tabla de resultados -->
+    <div class="tabla-container">
+        <table class="tabla-resultados">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for academia in academias %} <!-- Cambié 'resultados' por 'academias' -->
+                <tr>
+                    <td>{{ academia.nombre }}</td>
+                    <td>
+                        <a href="{% url 'modificar_academia' academia.id %}">✏️</a>
+                        <a href="{% url 'eliminar_academia' academia.id %}">❌</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2">No se encontraron academias.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
